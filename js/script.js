@@ -14,14 +14,37 @@ function calcular() {
   let criancas = inputCriancas.value;
   let duracao = inputDuracao.value;
 
+  if (validacao(duracao, adultos, criancas)) {
+    resultado.innerHTML = `<p>${qtdCarne(duracao, adultos, criancas) / 1000} Kl de Carne</p>`;
+    resultado.innerHTML += `<p>${Math.ceil(qtdCerveja(duracao, adultos) / 355)} Latinhas de Cerveja</p>`;
+    resultado.innerHTML += `<p>${Math.ceil(qtdBebida(duracao, adultos, criancas) / 2000)} Pet's de 2L de Bebidas</p>`;
+  } else {
+    resultado.innerHTML = `<p><b>Revise os dados</b></p>`;
+  }
+}
+
+function validacao(duracao, adultos, criancas) {
+  if (duracao >= 0 && adultos >= 0 && criancas >= 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function qtdCarne(duracao, adultos, criancas) {
   let qtdCarne = carnePP(duracao) * adultos + (carnePP(duracao) / 2) * criancas;
+  return qtdCarne;
+}
+
+function qtdCerveja(duracao, adultos) {
   let qtdCerveja = cervejaPP(duracao) * adultos;
-  let qtdBebida =  bebidasPP(duracao) * adultos + (bebidasPP(duracao) / 2) * criancas;
+  return qtdCerveja;
+}
 
-  resultado.innerHTML = `<p>${qtdCarne/1000} Kl de Carne</p>`
-  resultado.innerHTML += `<p>${Math.ceil(qtdCerveja/355)} Latinhas de Cerveja</p>`
-  resultado.innerHTML += `<p>${Math.ceil(qtdBebida/2000)} Pet's de 2L de Bebidas</p>`
-
+function qtdBebida(duracao, adultos, criancas) {
+  let qtdBebida =
+    bebidasPP(duracao) * adultos + (bebidasPP(duracao) / 2) * criancas;
+  return qtdBebida;
 }
 
 function carnePP(duracao) {
